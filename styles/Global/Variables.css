@@ -1,0 +1,25 @@
+:root {
+  /* COLORS (Paleta Drop IA) */
+ --primary: #0DA2E7;
+  --secondary: #2463EB;
+  --bg: #F8FAFC;
+  --border: #E1E7EF;
+  --text-sub: #788599;
+  --text-main: #111822;
+
+  /* FONTS (Famílias) */
+  --font-title: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* FONT SIZES (Escala Hierárquica) */
+  --fs-max: 5.5rem;           /* Título da Hero */
+  --fs-h0: 4.5rem;           /* Título da Hero */
+  --fs-h1: 3.5rem;           /* Título da Hero */
+  --fs-h2: 2.5rem;           /* Títulos de Seção */
+  --fs-h3: 1.5rem;           /* Títulos de Cards/Subseções */
+  --fs-body: 1.125rem;       /* Texto base (18px) */
+  --fs-small: 0.875rem;      /* Rodapé e etiquetas */
+
+  /* TRANSITIONS */
+  --transition: all 0.4s ease-in-out;
+}
