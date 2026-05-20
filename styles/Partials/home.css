@@ -2243,3 +2243,220 @@
 }
 
 
+
+
+
+
+
+/* ==========================================================================
+   FIX DE LAYOUT INTERMEDIÁRIO — DROP IA CORREÇÃO
+   ========================================================================== */
+#mecanismo-scroller {
+  position: relative;
+  width: 100%;
+  background-color: #05070b !important; /* Força o bloco inteiro a se manter preto */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Evita bugs visuais no espaço gerado pelo GSAP Pin Spacer */
+#mecanismo-scroller .pin-spacer {
+  background-color: #05070b !important;
+}
+
+.mec-pin-capture {
+  width: 100%;
+  height: 100vh;
+  background-color: #05070b;
+}
+
+.mec-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* --- CAMADA DO HERO --- */
+.mec-hero-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background-color: #05070b;
+  padding: 0 2rem;
+}
+
+.mec-hero-content {
+  text-align: center;
+}
+
+.mec-tag-premium {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #007aff;
+  margin-bottom: 1.5rem;
+}
+
+.mec-zoom-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  will-change: transform, opacity;
+}
+
+.mec-fade-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-top: 1.5rem;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* --- TIMELINE HUD SYSTEM --- */
+.mec-timeline-nav {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; 
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mec-timeline-line {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  bottom: 5px;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.mec-line-progress {
+  width: 100%;
+  height: 0%;
+  background-color: #007aff;
+  will-change: height;
+}
+
+.mec-nav-item {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.mec-nav-item::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+}
+
+.mec-nav-item .mec-num {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+  transition: all 0.4s ease;
+}
+
+.mec-nav-item.is-active::before {
+  background-color: #007aff;
+  width: 12px;
+  left: -5px;
+}
+
+.mec-nav-item.is-active .mec-num {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* --- TEXTOS FLUTUANTES --- */
+.mec-slides-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mec-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  padding: 0 2rem 0 5.5rem;
+}
+
+.mec-slide-layout {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.mec-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.mec-slide-layout h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.8rem;
+}
+
+.mec-slide-layout p {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.mec-detail {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #007aff;
+  border-left: 2px solid #007aff;
+  padding-left: 0.6rem;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (min-width: 1024px) {
+  .mec-zoom-title { font-size: 5rem; letter-spacing: -0.06em; }
+  .mec-fade-subtitle { font-size: 1.05rem; max-width: 480px; }
+  
+  .mec-timeline-nav { left: 6rem; gap: 3rem; }
+  .mec-nav-item .mec-num { font-size: 0.9rem; }
+  .mec-timeline-line { left: 1.25rem; }
+
+  .mec-slide { padding: 0 15% 0 15%; justify-content: flex-end; }
+  .mec-slide-layout { max-width: 460px; }
+  .mec-slide-layout h2 { font-size: 2.6rem; }
+  .mec-slide-layout p { font-size: 1.05rem; }
+}

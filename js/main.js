@@ -205,3 +205,98 @@ window.animarConquistas = function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Garanta o registro do ScrollTrigger no escopo global
+gsap.registerPlugin(ScrollTrigger);
+
+const MEC_STAGES = [
+  { id: 1, progressHeight: "0%" },
+  { id: 2, progressHeight: "33%" },
+  { id: 3, progressHeight: "66%" },
+  { id: 4, progressHeight: "100%" }
+];
+
+// 1. Criação da Timeline Mestre com controle do Header e Pin estrito
+const mecMasterTimeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: "#mecanismo-scroller .mec-pin-capture",
+    start: "top top",
+    end: "+=6000", // Espaço suficiente para o scroll rodar macio
+    scrub: 1.1,
+    pin: true,
+    pinSpacing: true,
+    invalidateOnRefresh: true,
+    onEnter: () => {
+      gsap.to("header", { opacity: 0, y: -50, duration: 0.3, ease: "power2.out" });
+    },
+    onLeave: () => {
+      gsap.to("header", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" });
+    },
+    onEnterBack: () => {
+      gsap.to("header", { opacity: 0, y: -50, duration: 0.3, ease: "power2.out" });
+    },
+    onLeaveBack: () => {
+      gsap.to("header", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" });
+    }
+  }
+});
+
+// --- FASE 1: ZOOM DO TITULO HERO ---
+mecMasterTimeline.to(".mec-fade-subtitle, .mec-tag-premium", { opacity: 0, y: -30, duration: 0.8, ease: "power2.out" }, 0)
+                 .to(".mec-zoom-title", { scale: 3, opacity: 0, duration: 1.8, ease: "power2.inOut" }, 0)
+                 // Força a timeline lateral a aparecer assim que o título sumir
+                 .to(".mec-timeline-nav", { autoAlpha: 1, duration: 0.4 }, "-=0.2")
+                 .to(".mec-hero-layer", { display: "none", duration: 0.1 }); // Remove o bloco do título da frente
+
+
+// --- FASE 2: EXIBIÇÃO FORÇADA DAS ETAPAS ---
+MEC_STAGES.forEach((stage, index) => {
+  const labelIn = `mec_in_${stage.id}`;
+  const labelOut = `mec_out_${stage.id}`;
+  
+  const navItem = document.querySelector(`[data-mec-step="${stage.id}"]`);
+  const currentSlide = document.querySelector(`[data-mec-slide="${stage.id}"]`);
+  const isLast = index === MEC_STAGES.length - 1;
+
+  if (currentSlide) {
+    // Garante que o slide comece invisível, mas preparado para renderizar
+    gsap.set(currentSlide, { y: 30, opacity: 0, visibility: "hidden", display: "none" });
+
+    // ENTRADA DA ETAPA
+    mecMasterTimeline.addLabel(labelIn)
+      // Força o elemento a existir no DOM mudando o display antes do fade
+      .to(currentSlide, { display: "flex", visibility: "visible", duration: 0.01 }, labelIn)
+      .to(currentSlide, { y: 0, opacity: 1, autoAlpha: 1, duration: 1.2, ease: "power3.out" }, labelIn)
+      .to(navItem, { className: "mec-nav-item is-active", overwrite: "auto" }, labelIn)
+      .to(".mec-line-progress", { height: stage.progressHeight, overwrite: "auto" }, labelIn);
+
+    // SAÍDA DA ETAPA (Apenas se não for o último slide)
+    if (!isLast) {
+      mecMasterTimeline.addLabel(labelOut)
+        .to(currentSlide, { y: -30, opacity: 0, autoAlpha: 0, duration: 1, ease: "power3.in" }, `${labelOut}+=2.5`)
+        .to(navItem, { className: "mec-nav-item", overwrite: "auto" }, `${labelOut}+=2.5`)
+        // Oculta completamente o slide antigo para não quebrar o layout do próximo
+        .to(currentSlide, { display: "none", visibility: "hidden", duration: 0.01 }, `${labelOut}+=3.5`);
+    }
+  }
+});
+
+// Força o recálculo global de altura do site para garantir que tudo sincronize perfeitamente
+window.addEventListener("load", () => {
+  ScrollTrigger.refresh();
+});
