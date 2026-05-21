@@ -22,24 +22,26 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
-
 // --- 3. ANIMAÇÕES DA PÁGINA (Aguardando o DOM) ---
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- HEADER: Efeito de Scroll ---
+    // --- HEADER: Efeito de Scroll Padrão ---
     const header = document.querySelector(".main-header");
     if (header) {
         ScrollTrigger.create({
             start: "top -50",
             onUpdate: (self) => {
-                if (self.direction === 1) { // Descendo
-                    header.style.background = "rgba(255, 255, 255, 0.7)";
-                    header.style.backdropFilter = "blur(12px)";
-                    header.classList.add("header-active");
-                } else if (self.scroll() < 50) { // No topo
-                    header.style.background = "transparent";
-                    header.style.backdropFilter = "none";
-                    header.classList.remove("header-active");
+                // Só aplica o efeito padrão se a animação do Dropia NÃO estiver ativa
+                if (!header.classList.contains("header-hidden")) {
+                    if (self.direction === 1) { // Descendo
+                        header.style.background = "rgba(255, 255, 255, 0.7)";
+                        header.style.backdropFilter = "blur(12px)";
+                        header.classList.add("header-active");
+                    } else if (self.scroll() < 50) { // No topo
+                        header.style.background = "transparent";
+                        header.style.backdropFilter = "none";
+                        header.classList.remove("header-active");
+                    }
                 }
             }
         });
@@ -53,17 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 1.2,
         ease: "expo.out"
     })
-    .from(".hero-content p", {
-        y: 20,
-        opacity: 0,
-        duration: 1
-    }, "-=0.8")
-    .from(".btn-primary", {
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "-=0.6");
+        .from(".hero-content p", {
+            y: 20,
+            opacity: 0,
+            duration: 1
+        }, "-=0.8")
+        .from(".btn-primary", {
+            scale: 0.9,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out"
+        }, "-=0.6");
 
     // --- SEÇÃO: O Problema ---
     const tlProblema = gsap.timeline({
@@ -80,18 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 1.2,
         ease: "power3.out"
     })
-    .from(".card", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "expo.out"
-    }, "-=0.8")
-    .from(".text-problema span", {
-        color: "var(--text-sub)",
-        duration: 1,
-        stagger: 0.1
-    }, "-=0.5");
+        .from(".card", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "expo.out"
+        }, "-=0.8")
+        .from(".text-problema span", {
+            color: "var(--text-sub)",
+            duration: 1,
+            stagger: 0.1
+        }, "-=0.5");
 
     // --- SEÇÃO: Solução (IA DROP / WAVE) ---
     const tlSolucao = gsap.timeline({
@@ -109,16 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
         stagger: 0.1,
         ease: "power3.out"
     })
-    .fromTo(".mobile img",
-        { scale: 0.9, opacity: 0, y: 50, rotationX: 10 },
-        { scale: 1, opacity: 1, y: 0, rotationX: 0, duration: 1.5, ease: "expo.out" },
-        "-=0.8"
-    )
-    .fromTo(".card-infoapp",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out" },
-        "-=1"
-    );
+        .fromTo(".mobile img",
+            { scale: 0.9, opacity: 0, y: 50, rotationX: 10 },
+            { scale: 1, opacity: 1, y: 0, rotationX: 0, duration: 1.5, ease: "expo.out" },
+            "-=0.8"
+        )
+        .fromTo(".card-infoapp",
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out" },
+            "-=1"
+        );
 
     // --- EXTRA: Paralaxe Suave no Celular ---
     gsap.to(".mobile img", {
@@ -132,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "none"
     });
 
-    // --- SEÇÃO FINAL (Movida para dentro do DOMContentLoaded) ---
+    // --- SEÇÃO FINAL ---
     const tlFinal = gsap.timeline({
         scrollTrigger: {
             trigger: "#final",
@@ -148,31 +150,31 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 0.6,
         ease: "back.out(1.7)"
     })
-    .from(".text-final h1, .text-final p", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out"
-    }, "-=0.3")
-    .from(".form", {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "-=0.4")
-    .from(".fundo", {
-        scale: 0.9,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power1.out"
-    }, "-=0.8")
-    .from(".footer", {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-        ease: "power2.out"
-    }, "-=0.4");
+        .from(".text-final h1, .text-final p", {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out"
+        }, "-=0.3")
+        .from(".form", {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out"
+        }, "-=0.4")
+        .from(".fundo", {
+            scale: 0.9,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power1.out"
+        }, "-=0.8")
+        .from(".footer", {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+            ease: "power2.out"
+        }, "-=0.4");
 });
 
 // Mantido como global caso seja disparado por algum evento externo do seu app
@@ -192,111 +194,74 @@ window.animarConquistas = function () {
         stagger: 0.2,
         ease: "expo.out"
     })
-    .to(".progress-bar-fill", {
-        width: (index, target) => {
-            const percent = target.getAttribute("data-percentage");
-            return `${percent}%`;
-        },
-        duration: 1.5,
-        ease: "power4.out",
-        stagger: 0.15
-    }, "-=0.6");
+        .to(".progress-bar-fill", {
+            width: (index, target) => {
+                const percent = target.getAttribute("data-percentage");
+                return `${percent}%`;
+            },
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.15
+        }, "-=0.6");
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Garanta o registro do ScrollTrigger no escopo global
+// Registra o plugin de scroll do GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-const MEC_STAGES = [
-  { id: 1, progressHeight: "0%" },
-  { id: 2, progressHeight: "33%" },
-  { id: 3, progressHeight: "66%" },
-  { id: 4, progressHeight: "100%" }
-];
+// Cria a timeline master baseada no scroll da seção principal
+const dropiaTimeline = gsap.timeline({
+    scrollTrigger: {
+        trigger: "#como-funciona",
+        start: "top top",
+        end: "+=5000", // Distância de scroll para controlar a velocidade das transições
+        scrub: 1.2,    // Suavidade do arraste do scroll
+        pin: true,     // Trava o elemento na tela
+        pinSpacing: true,
+        invalidateOnRefresh: true,
 
-// 1. Criação da Timeline Mestre com controle do Header e Pin estrito
-const mecMasterTimeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: "#mecanismo-scroller .mec-pin-capture",
-    start: "top top",
-    end: "+=6000", // Espaço suficiente para o scroll rodar macio
-    scrub: 1.1,
-    pin: true,
-    pinSpacing: true,
-    invalidateOnRefresh: true,
-    onEnter: () => {
-      gsap.to("header", { opacity: 0, y: -50, duration: 0.3, ease: "power2.out" });
-    },
-    onLeave: () => {
-      gsap.to("header", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" });
-    },
-    onEnterBack: () => {
-      gsap.to("header", { opacity: 0, y: -50, duration: 0.3, ease: "power2.out" });
-    },
-    onLeaveBack: () => {
-      gsap.to("header", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" });
+        // --- AQUI ESTÁ O TRUQUE: O CONTROLE DA HEADER ---
+        // Quando a seção fixada começar, nós forçamos a remoção/injeção da classe
+        onToggle: (self) => {
+            const header = document.querySelector(".main-header");
+            if (header) {
+                if (self.isActive) {
+                    header.classList.add("header-hidden");
+                } else {
+                    header.classList.remove("header-hidden");
+                }
+            }
+        }
     }
-  }
 });
 
-// --- FASE 1: ZOOM DO TITULO HERO ---
-mecMasterTimeline.to(".mec-fade-subtitle, .mec-tag-premium", { opacity: 0, y: -30, duration: 0.8, ease: "power2.out" }, 0)
-                 .to(".mec-zoom-title", { scale: 3, opacity: 0, duration: 1.8, ease: "power2.inOut" }, 0)
-                 // Força a timeline lateral a aparecer assim que o título sumir
-                 .to(".mec-timeline-nav", { autoAlpha: 1, duration: 0.4 }, "-=0.2")
-                 .to(".mec-hero-layer", { display: "none", duration: 0.1 }); // Remove o bloco do título da frente
+// --- PASSO 1: Transição da Screen 1 para a Screen 2 ---
+dropiaTimeline
+    // Sumir com os textos iniciais da Screen 1 jogando-os para cima
+    .to(".screen-1 .text-subtittle, .screen-1 .scroll", { opacity: 0, y: -40, duration: 0.8 }, 0)
+    // Zoom no título principal estilo impacto do exemplo original
+    .to(".screen-1 .text-tittle", { scale: 2.5, opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
+    // Fade out no background estático cinza/luminoso da screen-1
+    .to(".screen-1", { opacity: 0, visibility: "hidden", duration: 0.6 }, "-=0.5")
 
+    // --- PASSO 2: Entrada e Saída da Screen 2 (Etapa 1) ---
+    .to(".screen-2", { opacity: 1, visibility: "visible", duration: 0.5 }, "-=0.2")
+    .fromTo(".screen-2 .container-etapa", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" })
+    // Tempo de leitura da etapa 1 antes de sair
+    .to(".screen-2 .container-etapa", { y: -50, opacity: 0, duration: 1, ease: "power3.in" }, "+=2.0")
+    .to(".screen-2", { opacity: 0, visibility: "hidden", duration: 0.3 })
 
-// --- FASE 2: EXIBIÇÃO FORÇADA DAS ETAPAS ---
-MEC_STAGES.forEach((stage, index) => {
-  const labelIn = `mec_in_${stage.id}`;
-  const labelOut = `mec_out_${stage.id}`;
-  
-  const navItem = document.querySelector(`[data-mec-step="${stage.id}"]`);
-  const currentSlide = document.querySelector(`[data-mec-slide="${stage.id}"]`);
-  const isLast = index === MEC_STAGES.length - 1;
+    // --- PASSO 3: Entrada e Saída da Screen 3 (Etapa 2) ---
+    .to(".screen-3", { opacity: 1, visibility: "visible", duration: 0.5 }, "-=0.2")
+    .fromTo(".screen-3 .container-etapa", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" })
+    // Tempo de leitura da etapa 2 antes de sair
+    .to(".screen-3 .container-etapa", { y: -50, opacity: 0, duration: 1, ease: "power3.in" }, "+=2.0")
+    .to(".screen-3", { opacity: 0, visibility: "hidden", duration: 0.3 })
 
-  if (currentSlide) {
-    // Garante que o slide comece invisível, mas preparado para renderizar
-    gsap.set(currentSlide, { y: 30, opacity: 0, visibility: "hidden", display: "none" });
+    // --- PASSO 4: Entrada da Screen 4 (Etapa 3 - Final) ---
+    .to(".screen-4", { opacity: 1, visibility: "visible", duration: 0.5 }, "-=0.2")
+    .fromTo(".screen-4 .container-etapa", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" });
 
-    // ENTRADA DA ETAPA
-    mecMasterTimeline.addLabel(labelIn)
-      // Força o elemento a existir no DOM mudando o display antes do fade
-      .to(currentSlide, { display: "flex", visibility: "visible", duration: 0.01 }, labelIn)
-      .to(currentSlide, { y: 0, opacity: 1, autoAlpha: 1, duration: 1.2, ease: "power3.out" }, labelIn)
-      .to(navItem, { className: "mec-nav-item is-active", overwrite: "auto" }, labelIn)
-      .to(".mec-line-progress", { height: stage.progressHeight, overwrite: "auto" }, labelIn);
-
-    // SAÍDA DA ETAPA (Apenas se não for o último slide)
-    if (!isLast) {
-      mecMasterTimeline.addLabel(labelOut)
-        .to(currentSlide, { y: -30, opacity: 0, autoAlpha: 0, duration: 1, ease: "power3.in" }, `${labelOut}+=2.5`)
-        .to(navItem, { className: "mec-nav-item", overwrite: "auto" }, `${labelOut}+=2.5`)
-        // Oculta completamente o slide antigo para não quebrar o layout do próximo
-        .to(currentSlide, { display: "none", visibility: "hidden", duration: 0.01 }, `${labelOut}+=3.5`);
-    }
-  }
-});
-
-// Força o recálculo global de altura do site para garantir que tudo sincronize perfeitamente
+// Sincroniza os cálculos de altura assim que a página terminar o carregamento total
 window.addEventListener("load", () => {
-  ScrollTrigger.refresh();
+    ScrollTrigger.refresh();
 });

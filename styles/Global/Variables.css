@@ -7,14 +7,20 @@
   --text-sub: #788599;
   --text-main: #111822;
 
+  /* COLORS (Paleta Etapas) */
+  --orage: #F97316;
+  --red: #EF4444;
+
   /* FONTS (Famílias) */
   --font-title: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
+  --font-impact: "Impact", sans-serif;
 
   /* FONT SIZES (Escala Hierárquica) */
   --fs-max: 5.5rem;           /* Título da Hero */
   --fs-h0: 4.5rem;           /* Título da Hero */
   --fs-h1: 3.5rem;           /* Título da Hero */
+  --fs-etapa:3.2rem;         /* Titulo da Etapa */
   --fs-h2: 2.5rem;           /* Títulos de Seção */
   --fs-h3: 1.5rem;           /* Títulos de Cards/Subseções */
   --fs-body: 1.125rem;       /* Texto base (18px) */
