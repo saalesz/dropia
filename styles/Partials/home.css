@@ -1590,8 +1590,8 @@
         }
 
         & .text-back {
-            width: 2200px;
-            left: calc(50% - 2200px/2);
+             width: 2800px;
+            left: calc(50% - 2800px/2);
             bottom: -2px;
 
             font-family: var(--font-body);
@@ -1638,8 +1638,8 @@
         }
 
         & .text-back {
-            width: 2200px;
-            left: calc(50% - 2200px/2);
+            width: 2800px;
+            left: calc(50% - 2800px/2);
             bottom: -2px;
 
             font-family: var(--font-body);
